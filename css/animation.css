@@ -1,0 +1,43 @@
+/* #region Tremble  */
+/* Definition for 'cold' animation */
+@keyframes tremble {
+	0% { transform: translate(1px, 0.5px) rotate(0deg); }
+	10% { transform: translate(-0.5px, -1px) rotate(-1deg); }
+	20% { transform: translate(1.5px, 0px) rotate(1deg); }
+	30% { transform: translate(0px, 1px) rotate(0deg); }
+	40% { transform: translate(0.5px, -0.5px) rotate(1deg); }
+	50% { transform: translate(-0.5px, 1px) rotate(-1deg); }
+	60% { transform: translate(1.5px, 0.5px) rotate(0deg); }
+	70% { transform: translate(1px, 0.5px) rotate(-1deg); }
+	80% { transform: translate(-0.5px, -0.5px) rotate(1deg); }
+	90% { transform: translate(1px, 1px) rotate(0deg); }
+	100% { transform: translate(0.5px, -1px) rotate(-1deg); }
+}
+
+.tremble {
+    animation-name: tremble;
+	animation-duration: 0.4s;
+	transform-origin:50% 50%;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+/* #endregion */
+
+/* #region Snowflake*/
+/* Keyframes and styling for snowflake, to be attached to 'tremble' elements using jquery */
+@keyframes snowflake {
+    0% { transform: translate(0px, 0px) rotate(0deg)}
+    35% { opacity: 100 }
+    75% { opacity: 0 }
+    100% { transform: translate(0px, 175px) rotate(270deg); opacity: 0 }
+}
+
+.snowflake {
+    position: absolute;
+    animation-name: snowflake;
+    animation-duration: 1.5s;
+    transform-origin:50% 50%;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in;
+}
+/* #endregion */
