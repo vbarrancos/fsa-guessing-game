@@ -2,11 +2,46 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Index</title>
+    <title>Guessing Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-   <a href="./animationtest.html">Animation test</a> 
+    <div class="container" id="app">
+        <div class="page-header">
+            <h1>Guessing Game<small><br>Fullstack Academy Foundations</small></h1>
+        </div>
+        <div id="game">
+            <div id="game-input">
+            </div>
+            <div id="game-guesses">
+                <ul>
+                    <li>_</li>
+                    <li>_</li>
+                    <li>_</li>
+                    <li>_</li>
+                    <li>_</li>
+                    <li>_</li>
+                </ul> 
+            </div>
+            <div class="game-buttons">
+                <button type="button" class="btn btn-primary">Guess</button>
+                <button type="button" class="btn btn-danger">Reset</button>
+            </div>
+        </div>
+    </div>
+    <!-- change this to flexbox -->
+    <div class="container footer">
+        <div class="footer-segment">
+            <img src="./img/fsa_logo.png"></img>
+        </div>
+        <div class="footer-segment">
+            <h4>Project by <a href="http://github.com/vbarrancos">Victor Barrancos</a></h4>
+        </div>
+        <div class="footer-segment">
+            <img style="padding:5px" src="https://www.gracehopper.com/images/gh-logo-sm-w-h_1.svg"></img>
+        </div>
+    </div>
 </body>
 </html>
