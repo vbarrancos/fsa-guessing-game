@@ -82,18 +82,19 @@ h1, h2, h3, h4 {
 }
 
 .footer {
-    position: absolute;
-    bottom: 0;
     width: 100%;
-    line-height: 60px;
     background-color: #f2f2f2;
     border-top: 1px solid #dddddd;
+    display:flex;
+    flex-flow: wrap;
+    justify-content: space-around
 }
 
 .footer-segment {
     display:inline-block;
+    vertical-align: middle;
     text-align: center;
-    width:33%;
+    width: 250px;
     height: 60px;
 }
 
