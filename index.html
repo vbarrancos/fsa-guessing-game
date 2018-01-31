@@ -4,44 +4,77 @@
     <meta charset="utf-8" />
     <title>Guessing Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/theme.css">
 </head>
 <body>
     <div class="container" id="app">
         <div class="page-header">
-            <h1>Guessing Game<small><br>Fullstack Academy Foundations</small></h1>
+            <h1>Guessing Game</h1>
         </div>
         <div id="game">
-            <div id="game-input">
+            <div class="game-section" id="game-header">
+                <h2>Enter your guess!</h2>
             </div>
-            <div id="game-guesses">
-                <ul>
-                    <li>_</li>
-                    <li>_</li>
-                    <li>_</li>
-                    <li>_</li>
-                    <li>_</li>
-                    <li>_</li>
-                </ul> 
+            <div class="game-section" id="game-input">
+                <input type="text" maxlength="3" class="form-control" placeholder="0-99">
             </div>
-            <div class="game-buttons">
-                <button type="button" class="btn btn-primary">Guess</button>
-                <button type="button" class="btn btn-danger">Reset</button>
+            <div class="game-section" id="game-guesses">
+                <div id="guess-underlines">
+                    <div>_</div>
+                    <div>_</div>
+                    <div>_</div>
+                    <div>_</div>
+                    <div>_</div>
+                    <div>_</div>
+                </div>
+                <div id="guess-numbers">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="game-section" id="game-buttons">
+                <button id="guess-button" type="button" class="btn btn-primary btn-lg">Guess</button>
+                <button id="newgame-button" type="button" class="btn btn-danger btn-lg">Restart</button>
             </div>
         </div>
     </div>
     <!-- change this to flexbox -->
-    <div class="container footer">
+    <div class="footer">
         <div class="footer-segment">
             <img src="./img/fsa_logo.png"></img>
         </div>
         <div class="footer-segment">
-            <h4>Project by <a href="http://github.com/vbarrancos">Victor Barrancos</a></h4>
+            <span>Project by <a href="http://github.com/vbarrancos"><img src="./img/github-vector.svg" id="github-icon">Victor Barrancos</a>
+                <br>Sketchy theme from Bootswatch.com
+            </span>
         </div>
         <div class="footer-segment">
             <img style="padding:5px" src="https://www.gracehopper.com/images/gh-logo-sm-w-h_1.svg"></img>
         </div>
     </div>
+    
+    <div class="startgame-overlay">
+        <div class="card border-primary mb-3">
+            <div class="card-header">Welcome!</div>
+            <div class="card-body text-primary">
+                <h4 class="card-title">Select a difficulty mode...</h4>
+                <p class="card-text">Easy<br>Medium<br>Hard</p>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="./js/game.js" charset="utf-8"></script>
+    <script>
+        var game;
+        window.addEventListener("load", function() {
+            game = new GuessingGame(document.querySelector("#game"));
+            console.log(game)
+            game.newGame();
+        })
+    </script>
 </body>
 </html>
