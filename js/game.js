@@ -18,9 +18,9 @@ let GameState = function(difficulty) {
 }
 
 GameState.prototype.makeGuess = function(guess) {
-    console.log(`Input: ${guess} (${typeof(guess)})`)
-    console.log(`Solution: ${this.secretNumber}`)
-    let guessNumber = Number.parseInt(guess)
+    console.log(`Input: ${guess} (${typeof(guess)})`);
+    console.log(`Solution: ${this.secretNumber}`);
+    let guessNumber = Number.parseInt(guess);
     if (this.gameOver)
         throw "Game is already over.";
     if (!Number.isInteger(guessNumber) || guessNumber < 0 || guessNumber > this.upperBound)
@@ -30,7 +30,7 @@ GameState.prototype.makeGuess = function(guess) {
     this.guesses.push(guessNumber);
     if (guessNumber === this.secretNumber || this.guesses.length >= this.guessLimit)
         this.gameOver = true;
-    return this.secretNumber - guessNumber;
+    return Math.abs(this.secretNumber - guessNumber);
 }
 
 let GuessingGame = function(ui) {
@@ -38,14 +38,16 @@ let GuessingGame = function(ui) {
     this.uiGuessInput = ui.querySelector("#game-input>input");
     this.uiHeaderText = ui.querySelector("#game-header>h2");
     this.uiGuessButton = ui.querySelector("#guess-button");
-    this.uiRestartButton = ui.querySelector("#newgame-button")
-    this.uiGuessButton.onclick = this.tryGuess.bind(this)
-    this.uiRestartButton.onclick = this.newGame.bind(this)
+    this.uiRestartButton = ui.querySelector("#newgame-button");
+    this.uiGuessButton.onclick = this.tryGuess.bind(this);
+    this.uiRestartButton.onclick = this.newGame.bind(this);
+    this.animator = new AnimationHandler();
 }
 
 GuessingGame.prototype.newGame = function() {
-    console.log(this)
+    console.log(this);
     this.state = new GameState(0);
+    this.uiHeaderText.innerHTML = "Enter your guess!";
     this.uiGuessInput.setAttribute("placeholder", `0-${this.state.upperBound}`)
     this.updateGuessList();
 }
@@ -54,20 +56,47 @@ GuessingGame.prototype.tryGuess = function() {
     let difference;
     let value = this.uiGuessInput.value;
     this.uiGuessInput.focus();
-    this.uiGuessInput.value = ""
+    this.uiGuessInput.value = "";
     try {
-        this.state.makeGuess(value)
+        let difference = this.state.makeGuess(value);
         this.updateGuessList();
+        if (difference === 0)
+            this.winGame();
+        if (difference > 0)
+            this.updateHotCold(difference);
     }
     catch(exception) {
-        this.uiHeaderText.innerHTML = exception
+        this.uiHeaderText.innerHTML = exception;
     }
-
 }
 
 GuessingGame.prototype.updateGuessList = function() {
     for (let i = 0; i < this.state.guessLimit; i++) {
         let guess = this.state.guesses[i];
-        this.uiGuessList[i].innerHTML = (guess === void(0) ? "" : guess)
+        this.uiGuessList[i].innerHTML = (guess === void(0) ? "" : guess);
     }
+}
+
+GuessingGame.prototype.updateHotCold = function(difference) {
+    let text = this.uiHeaderText;
+    if (difference >= 70) {
+        text.innerHTML = "Freezing!";
+    } else if (difference >= 50) {
+        text.innerHTML = "Chilly!";
+    } else if (difference >= 35) {
+        text.innerHTML = "Cool!";
+    } else if (difference >= 25) {
+        text.innerHTML = "Warm!";
+    } else if (difference >= 15) {
+        text.innerHTML = "Hot!";
+    } else if (difference < 5) {
+        text.innerHTML = "Boiling!";
+    }
+    this.startColdAnimation(difference);
+}
+
+GuessingGame.prototype.startColdAnimation = function(difference) {
+    let magnitude = difference / 150;
+    console.log("Magnitude", magnitude)
+    this.animator.animateCold(this.uiHeaderText, magnitude);
 }
