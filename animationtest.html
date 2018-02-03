@@ -28,23 +28,31 @@
 </head>
 <body>
     <h1>Animation Test</h1>
+    <input id="animation-magnitude" type="text" maxlength="3" placeholder="Magnitude">
+    <button id="start-animations" type="button" onclick="startAnimTest()">Start animations</button>
+    <button id="stop-animations" type="button" onclick="anim.clearDynamicAnimations()">Stop animations</button>
+    <hr>
     <h3>Cold</h3>
     <div id="textContainer">
-        <span id="coldText" class="tremble">Colder</span>
-        <br>
-        <div class="snowflake">❄</div>
+        <span id="coldText">Colder</span>
+        <!-- <br>
+        <div class="snowflake">❄</div> -->
     </div>
     <h3>Hot</h3>
     <div id="textContainer">
         <span id="hotText" style="margin: 100px auto; width: 60px;"> Hotter
         </div>
     </div>
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="./js/jquery-3.3.1.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="./js/jquery.keyframes.js" charset="utf-8"></script>
     <script type="text/javascript" src="./js/animation.js" charset="utf-8"></script>
     <script>
-        var anim = new AnimationHandler()
-        anim.animateHot(document.getElementById("hotText"));
+        var anim = new AnimationManager()
+        var startAnimTest = function() {
+            var magnitude = document.getElementById("animation-magnitude").value || 0.5;
+            anim.addDynamicAnimation("hot", new HotAnimation(document.getElementById("hotText"), magnitude));
+            anim.addDynamicAnimation("cold", new ColdAnimation(document.getElementById("coldText"), magnitude))
+        }
     </script>
 </body>
 </html>

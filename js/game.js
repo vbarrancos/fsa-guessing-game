@@ -41,15 +41,17 @@ let GuessingGame = function(ui) {
     this.uiRestartButton = ui.querySelector("#newgame-button");
     this.uiGuessButton.onclick = this.tryGuess.bind(this);
     this.uiRestartButton.onclick = this.newGame.bind(this);
-    this.animator = new AnimationHandler();
+    this.animator = new AnimationManager();
 }
 
 GuessingGame.prototype.newGame = function() {
-    console.log(this);
     this.state = new GameState(0);
+    this.animator.clearDynamicAnimations();
     this.uiHeaderText.innerHTML = "Enter your guess!";
     this.uiGuessInput.setAttribute("placeholder", `0-${this.state.upperBound}`)
     this.updateGuessList();
+    console.log(this);
+    console.log(this.state.secretNumber);
 }
 
 GuessingGame.prototype.tryGuess = function() {
@@ -57,6 +59,7 @@ GuessingGame.prototype.tryGuess = function() {
     let value = this.uiGuessInput.value;
     this.uiGuessInput.focus();
     this.uiGuessInput.value = "";
+    this.animator.clearDynamicAnimations();
     try {
         let difference = this.state.makeGuess(value);
         this.updateGuessList();
@@ -83,20 +86,34 @@ GuessingGame.prototype.updateHotCold = function(difference) {
         text.innerHTML = "Freezing!";
     } else if (difference >= 50) {
         text.innerHTML = "Chilly!";
-    } else if (difference >= 35) {
+    } else if (difference >= 30) {
         text.innerHTML = "Cool!";
-    } else if (difference >= 25) {
+    } else if (difference >= 20) {
         text.innerHTML = "Warm!";
-    } else if (difference >= 15) {
+    } else if (difference >= 10) {
         text.innerHTML = "Hot!";
-    } else if (difference < 5) {
+    } else if (difference > 3) {
         text.innerHTML = "Boiling!";
+    } else if (difference <= 3) {
+        text.innerHTML = "Scorching!!";
     }
-    this.startColdAnimation(difference);
+
+    if (difference > 30)
+        this.startColdAnimation(difference);
+    else
+        this.startHotAnimation(difference);
 }
 
 GuessingGame.prototype.startColdAnimation = function(difference) {
     let magnitude = difference / 150;
     console.log("Magnitude", magnitude)
-    this.animator.animateCold(this.uiHeaderText, magnitude);
+    let animation = new ColdAnimation(this.uiHeaderText, magnitude);
+    this.animator.addDynamicAnimation("cold", animation);
+}
+
+GuessingGame.prototype.startHotAnimation = function(difference) {
+    let magnitude = 1 - (difference / 25);
+    console.log("Difference:", difference, "Magnitude:", magnitude)
+    let animation = new HotAnimation(this.uiHeaderText, magnitude);
+    this.animator.addDynamicAnimation("hot", animation);
 }
