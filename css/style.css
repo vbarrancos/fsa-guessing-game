@@ -1,5 +1,15 @@
-body {
+html, body {
+    height: 100%;
     min-width: 360px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1 0 auto;
 }
 
 h1, h2, h3, h4 {
@@ -87,15 +97,27 @@ h1, h2, h3, h4 {
     border-top: 1px solid #dddddd;
     display:flex;
     flex-flow: wrap;
+    flex-direction: column;
     justify-content: space-around
 }
+
+@media (min-width: 850px)
+{
+    .footer {
+        flex-direction: row;
+    }
+}
+
+#attrib-content {
+    position: relative;
+}
+
 
 .footer-segment {
     display:inline-block;
     vertical-align: middle;
     text-align: center;
-    width: 250px;
-    height: 60px;
+    height: 85px;
 }
 
 .footer-segment span {
@@ -105,7 +127,8 @@ h1, h2, h3, h4 {
 }
 
 .footer-segment img {
-    max-height: 60px;
+    padding: .75em;
+    max-height: 85px;
 }
 
 #github-icon {
