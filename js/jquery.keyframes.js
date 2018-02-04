@@ -105,6 +105,8 @@ function () {
     value: function generate(frameData) {
       var frameName = frameData.name || '';
       var css = "@keyframes ".concat(frameName, " {");
+      if (frameName.indexOf("hot-sparks") > -1)
+        debugger;
 
       for (var key in frameData) {
         if (key !== 'name' && key !== 'media' && key !== 'complete') {
@@ -115,15 +117,18 @@ function () {
           }
 
           css += '}';
+
+          if (frameData.media) {
+            css = "@media ".concat(frameData.media, "{").concat(css, "}");
+          }
         }
       }
-
-      if (frameData.media) {
-        css = "@media ".concat(frameData.media, "{").concat(css, "}");
-      }
-
+      return {css: css, frameName: frameName};
+    }
+  }, {
+    key: "applyStyle",
+    value: function applyStyle(css, frameName) {
       var frameStyle = document.getElementById(frameName);
-
       if (frameStyle) {
         frameStyle.innerHTML = css;
       } else {
@@ -133,12 +138,16 @@ function () {
   }, {
     key: "define",
     value: function define(frameData) {
+      var css = "";
+      var frameName
       if (frameData.length) {
         for (var i = 0; i < frameData.length; i += 1) {
-          this.generate(frameData[i]);
+          var retVal = this.generate(frameData[i]);
+          this.applyStyle(retVal.css, retVal.frameName)
         }
       } else {
-        this.generate(frameData);
+        var retVal = this.generate(frameData);
+        this.applyStyle(retVal.css, retVal.frameName)
       }
     }
   }]);
@@ -153,6 +162,7 @@ function () {
 
   $.keyframe = {
     isSupported: Keyframes.isSupported,
+    applyStyle: Keyframes.applyStyle,
     generate: Keyframes.generate,
     define: Keyframes.define
   };

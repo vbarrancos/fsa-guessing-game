@@ -112,7 +112,7 @@ GuessingGame.prototype.startColdAnimation = function(difference) {
 }
 
 GuessingGame.prototype.startHotAnimation = function(difference) {
-    let magnitude = 1 - (difference / 25);
+    let magnitude = 1 - (difference / 30);
     console.log("Difference:", difference, "Magnitude:", magnitude)
     let animation = new HotAnimation(this.uiHeaderText, magnitude);
     this.animator.addDynamicAnimation("hot", animation);
