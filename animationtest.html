@@ -31,7 +31,7 @@
     <input id="animation-magnitude" type="text" maxlength="3" placeholder="Magnitude">
     <button id="start-cold" type="button" onclick="startAnimTest(1)">Start cold animation</button>
     <button id="start-hot" type="button" onclick="startAnimTest(0)">Start hot animation</button>
-    <button id="stop-animations" type="button" onclick="anim.clearDynamicAnimations()">Stop animations</button>
+    <button id="stop-animations" type="button" onclick="anim.clearAnimations()">Stop animations</button>
     <hr>
     <h3>Cold</h3>
     <div id="textContainer">
@@ -54,9 +54,9 @@
         var startAnimTest = function(which) {
             var magnitude = document.getElementById("animation-magnitude").value || 0.5;
             if (which === 0)
-                anim.addDynamicAnimation("hot", new HotAnimation(document.getElementById("hotText"), magnitude));
+                anim.addAnimation("hot", new HotAnimation(document.getElementById("hotText"), magnitude));
             else
-                anim.addDynamicAnimation("cold", new ColdAnimation(document.getElementById("coldText"), magnitude))
+                anim.addAnimation("cold", new ColdAnimation(document.getElementById("coldText"), magnitude))
         }
     </script>
 </body>

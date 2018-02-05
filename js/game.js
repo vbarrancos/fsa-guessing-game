@@ -34,6 +34,7 @@ GameState.prototype.makeGuess = function(guess) {
 }
 
 let GuessingGame = function(ui) {
+    this.ui = ui;
     this.uiGuessList = ui.querySelectorAll("#guess-numbers>div");
     this.uiGuessInput = ui.querySelector("#game-input>input");
     this.uiHeaderText = ui.querySelector("#game-header>h2");
@@ -46,7 +47,7 @@ let GuessingGame = function(ui) {
 
 GuessingGame.prototype.newGame = function() {
     this.state = new GameState(0);
-    this.animator.clearDynamicAnimations();
+    this.animator.clearAnimations();
     this.uiHeaderText.innerHTML = "Enter your guess!";
     this.uiGuessInput.setAttribute("placeholder", `0-${this.state.upperBound}`)
     this.updateGuessList();
@@ -59,7 +60,7 @@ GuessingGame.prototype.tryGuess = function() {
     let value = this.uiGuessInput.value;
     this.uiGuessInput.focus();
     this.uiGuessInput.value = "";
-    this.animator.clearDynamicAnimations();
+    this.animator.clearAnimations();
     try {
         let difference = this.state.makeGuess(value);
         this.updateGuessList();
@@ -98,7 +99,7 @@ GuessingGame.prototype.updateHotCold = function(difference) {
         text.innerHTML = "Scorching!!";
     }
 
-    if (difference > 30)
+    if (difference >= 30)
         this.startColdAnimation(difference);
     else
         this.startHotAnimation(difference);
@@ -108,12 +109,12 @@ GuessingGame.prototype.startColdAnimation = function(difference) {
     let magnitude = difference / 150;
     console.log("Magnitude", magnitude)
     let animation = new ColdAnimation(this.uiHeaderText, magnitude);
-    this.animator.addDynamicAnimation("cold", animation);
+    this.animator.addAnimation("cold", animation);
 }
 
 GuessingGame.prototype.startHotAnimation = function(difference) {
     let magnitude = 1 - (difference / 30);
     console.log("Difference:", difference, "Magnitude:", magnitude)
     let animation = new HotAnimation(this.uiHeaderText, magnitude);
-    this.animator.addDynamicAnimation("hot", animation);
+    this.animator.addAnimation("hot", animation);
 }
