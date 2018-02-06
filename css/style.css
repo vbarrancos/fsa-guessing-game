@@ -109,9 +109,13 @@ h1, h2, h3, h4 {
 }
 
 #attrib-content {
+    padding-top: 15px;
     position: relative;
 }
 
+#attrib-content > span > a {
+    text-decoration: none;
+}
 
 .footer-segment {
     display:inline-block;
@@ -132,6 +136,6 @@ h1, h2, h3, h4 {
 }
 
 #github-icon {
-    height: .75em;
-    padding-right: 3px;
+    height: 1em;
+    padding: 0px;
 }
